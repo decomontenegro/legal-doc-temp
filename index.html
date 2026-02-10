@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Jurídica - Agravo de Instrumento</title>
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #f85149;
+            --border: #30363d;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .processo-info {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+            overflow-x: auto;
+        }
+
+        .nav-tabs {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0;
+            list-style: none;
+        }
+
+        .nav-tabs li {
+            flex-shrink: 0;
+        }
+
+        .nav-tabs a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .nav-tabs a:hover,
+        .nav-tabs a.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Partes Grid */
+        .partes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .parte-card {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .parte-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            opacity: 0.05;
+            font-size: 5rem;
+        }
+
+        .parte-agravante {
+            border-left-color: var(--accent);
+        }
+
+        .parte-agravado {
+            border-left-color: var(--danger);
+        }
+
+        .parte-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .parte-nome {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .parte-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .parte-info p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .parte-info .icon {
+            flex-shrink: 0;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -1.85rem;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 3px solid var(--accent);
+        }
+
+        .timeline-content {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            border: 1px solid var(--border);
+        }
+
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Summary List */
+        .summary-list {
+            list-style: none;
+        }
+
+        .summary-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .summary-list li:last-child {
+            border-bottom: none;
+        }
+
+        .summary-list .bullet {
+            color: var(--accent);
+            font-size: 1.2rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        /* Mind Map */
+        .mindmap-container {
+            overflow: auto;
+            padding: 2rem;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            min-height: 500px;
+        }
+
+        .mindmap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 900px;
+            min-height: 450px;
+            position: relative;
+        }
+
+        .mindmap-center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 160px;
+            height: 160px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            box-shadow: 0 10px 40px rgba(88, 166, 255, 0.3);
+            z-index: 10;
+        }
+
+        .mindmap-center .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mindmap-center .label {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .mindmap-branch {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mindmap-node {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 0.75rem 1rem;
+            min-width: 140px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .mindmap-node:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(88, 166, 255, 0.2);
+        }
+
+        .mindmap-node .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mindmap-node .label {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .mindmap-node .value {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .mindmap-line {
+            position: absolute;
+            background: var(--border);
+            z-index: 1;
+        }
+
+        /* Branch positions */
+        .branch-1 { left: 50%; top: 0; transform: translateX(-50%); }
+        .branch-2 { right: 5%; top: 15%; }
+        .branch-3 { right: 0; top: 50%; transform: translateY(-50%); }
+        .branch-4 { right: 5%; bottom: 15%; }
+        .branch-5 { left: 50%; bottom: 0; transform: translateX(-50%); }
+        .branch-6 { left: 5%; bottom: 15%; }
+        .branch-7 { left: 0; top: 50%; transform: translateY(-50%); }
+        .branch-8 { left: 5%; top: 15%; }
+
+        /* Search Section */
+        .search-container {
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-btn {
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .quick-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Results */
+        .results-container {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .results-header {
+            padding: 1rem 1.5rem;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        .results-content {
+            padding: 1.5rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-category {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-text {
+            font-size: 0.95rem;
+        }
+
+        .highlight {
+            background: rgba(88, 166, 255, 0.3);
+            padding: 0 0.25rem;
+            border-radius: 3px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Executive Summary */
+        .executive-summary {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            text-align: justify;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-warning {
+            background: rgba(210, 153, 34, 0.2);
+            color: var(--warning);
+        }
+
+        .badge-danger {
+            background: rgba(248, 81, 73, 0.2);
+            color: var(--danger);
+        }
+
+        .badge-success {
+            background: rgba(63, 185, 80, 0.2);
+            color: var(--success);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav {
+                padding: 0 1rem;
+            }
+
+            .nav-tabs a {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .mindmap-container {
+                padding: 1rem;
+            }
+
+            .mindmap {
+                transform: scale(0.6);
+                transform-origin: center center;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* Alert Box */
+        .alert {
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .alert-danger {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid rgba(248, 81, 73, 0.3);
+        }
+
+        .alert-warning {
+            background: rgba(210, 153, 34, 0.1);
+            border: 1px solid rgba(210, 153, 34, 0.3);
+        }
+
+        .alert-icon {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">⚖️</div>
+                <div>
+                    <h1>Análise Jurídica</h1>
+                    <small style="color: var(--text-secondary);">Agravo de Instrumento</small>
+                </div>
+            </div>
+            <div class="processo-info">
+                📋 Processo nº 0007993-84.2026.8.19.0000
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul class="nav-tabs">
+            <li><a href="#resumo" class="active" data-section="resumo">📄 Resumo</a></li>
+            <li><a href="#partes" data-section="partes">👥 Partes</a></li>
+            <li><a href="#timeline" data-section="timeline">📅 Timeline</a></li>
+            <li><a href="#mindmap" data-section="mindmap">🧠 Mind Map</a></li>
+            <li><a href="#busca" data-section="busca">🔍 Busca</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- RESUMO SECTION -->
+        <section id="resumo" class="section active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">R$ 30.280</div>
+                    <div class="stat-label">Pedido Mensal (20 SM)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value">R$ 3.028</div>
+                    <div class="stat-label">Atual (2 SM)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏪</div>
+                    <div class="stat-value">14</div>
+                    <div class="stat-label">Restaurantes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👶</div>
+                    <div class="stat-value">1a 9m</div>
+                    <div class="stat-label">Idade da Filha</div>
+                </div>
+            </div>
+
+            <div class="alert alert-danger">
+                <span class="alert-icon">⚠️</span>
+                <div>
+                    <strong>Medida Protetiva Vigente:</strong> Há medida protetiva de urgência contra o agravado por ameaças à agravante.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: var(--gradient-1);">📋</div>
+                    <h2 class="card-title">Resumo Executivo</h2>
+                </div>
+                <p class="executive-summary">
+                    Trata-se de <strong>Agravo de Instrumento</strong> interposto por <strong>Priscilla Pinto Gomez Rodriguez Moura</strong> contra decisão que fixou alimentos provisórios em apenas <strong>2 salários mínimos</strong> em favor de sua filha de 1 ano e 9 meses. A agravante alega que o agravado, <strong>Diego Fernandes Barros</strong>, é empresário de sucesso, proprietário da rede <strong>Sushi da Praça</strong> com 14 restaurantes e mais de 2.000 funcionários, além de possuir patrimônio expressivo que inclui Porsche blindado, imóveis de luxo e participação no setor de construção civil. Sustenta que houve <strong>ocultação patrimonial dolosa</strong>, já que ele declarou renda mensal de apenas R$ 6.500, incompatível com seu padrão de vida. Requer a majoração dos alimentos para <strong>20 salários mínimos mensais</strong> pelo período de <strong>5 anos</strong>, considerando sua condição de desempregada que precisa cuidar da filha em tempo integral, sua renda aproximada de R$ 5.000/mês, e a existência de medida protetiva por ameaças.
+                </p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: var(--gradient-2);">📌</div>
+                    <h2 class="card-title">Pontos Principais</h2>
+                </div>
+                <ul class="summary-list">
+                    <li>
+                        <span class="bullet">▸</span>
+                        <span><strong>Pedido central:</strong> Majoração de alimentos provisórios de 2 para 20 salários mínimos mensais, pelo período de 5 anos</span>
+                    </li>
+                    <li>
+                        <span class="bullet">▸</span>
+                        <span><strong>Fundamento:</strong> Trinômio necessidade-possibilidade-proporcionalidade desrespeitado pela decisão agravada</span>
+                    </li>
+                    <li>
+                        <span class="bullet">▸</span>
+                        <span><strong>Patrimônio alegado:</strong> 14 restaurantes (Sushi da Praça), 2.000+ funcionários, Porsche blindado, imóveis de luxo, atuação em construção civil</span>
+                    </li>
+                    <li>
+                        <span class="bullet">▸</span>
+                        <span><strong>Renda declarada pelo agravado:</strong> R$ 6.500/mês - alegadamente incompatível com padrão de vida</span>
+                    </li>
+                    <li>
+                        <span class="bullet">▸</span>
+                        <span><strong>Situação da agravante:</strong> Desempregada, renda de ~R$ 5.000/mês, dedicação integral à filha</span>
+                    </li>
+                    <li>
+                        <span class="bullet">▸</span>
+                        <span><strong>Agravante:</strong> Medida protetiva vigente contra o agravado por ameaças</span>
+                    </li>
+                    <li>
+                        <span class="bullet">▸</span>
+                        <span><strong>Ocultação patrimonial:</strong> Alegação de transferência de bens para terceiros e empresas em nome de "laranjas"</span>
+                    </li>
+                    <li>
+                        <span class="bullet">▸</span>
+                        <span><strong>Pedido subsidiário:</strong> Quebra de sigilo bancário e fiscal para comprovação da real capacidade econômica</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- PARTES SECTION -->
+        <section id="partes" class="section">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem;">👥 Partes Envolvidas</h2>
+            
+            <div class="partes-grid">
+                <div class="parte-card parte-agravante">
+                    <div class="parte-label">Agravante (Autora)</div>
+                    <div class="parte-nome">Priscilla Pinto Gomez Rodriguez Moura</div>
+                    <div class="parte-info">
+                        <p><span class="icon">👤</span> Ex-companheira do agravado</p>
+                        <p><span class="icon">👶</span> Mãe da menor (1 ano e 9 meses)</p>
+                        <p><span class="icon">💼</span> Situação: Desempregada</p>
+                        <p><span class="icon">💰</span> Renda aproximada: R$ 5.000/mês</p>
+                        <p><span class="icon">🏠</span> Dedicação integral aos cuidados da filha</p>
+                        <p><span class="icon">🛡️</span> <span class="badge badge-danger">Beneficiária de medida protetiva</span></p>
+                    </div>
+                </div>
+
+                <div class="parte-card parte-agravado">
+                    <div class="parte-label">Agravado (Réu)</div>
+                    <div class="parte-nome">Diego Fernandes Barros</div>
+                    <div class="parte-info">
+                        <p><span class="icon">👤</span> Ex-companheiro da agravante</p>
+                        <p><span class="icon">👶</span> Pai da menor</p>
+                        <p><span class="icon">🏢</span> Empresário - Dono da rede Sushi da Praça</p>
+                        <p><span class="icon">🍣</span> 14 restaurantes no portfólio</p>
+                        <p><span class="icon">👥</span> Mais de 2.000 funcionários</p>
+                        <p><span class="icon">💰</span> Renda declarada: R$ 6.500/mês</p>
+                        <p><span class="icon">🚗</span> Proprietário de Porsche blindado</p>
+                        <p><span class="icon">🏗️</span> Atuação no setor de construção civil</p>
+                        <p><span class="icon">⚠️</span> <span class="badge badge-warning">Medida protetiva por ameaças</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">👶</div>
+                    <h2 class="card-title">Menor Alimentanda</h2>
+                </div>
+                <div class="parte-info">
+                    <p><span class="icon">👧</span> Filha do casal</p>
+                    <p><span class="icon">📅</span> Idade: 1 ano e 9 meses</p>
+                    <p><span class="icon">🏠</span> Reside com a mãe (agravante)</p>
+                    <p><span class="icon">💰</span> Alimentos provisórios fixados: 2 salários mínimos</p>
+                    <p><span class="icon">📈</span> Alimentos pleiteados: 20 salários mínimos por 5 anos</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TIMELINE SECTION -->
+        <section id="timeline" class="section">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem;">📅 Linha do Tempo dos Fatos</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Período Anterior</div>
+                        <div class="timeline-title">União Estável</div>
+                        <div class="timeline-desc">Priscilla e Diego mantiveram união estável, durante a qual nasceu a filha do casal.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">~2024</div>
+                        <div class="timeline-title">Nascimento da Filha</div>
+                        <div class="timeline-desc">Nasce a filha do casal, hoje com 1 ano e 9 meses de idade.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Posterior ao Nascimento</div>
+                        <div class="timeline-title">Fim da União Estável</div>
+                        <div class="timeline-desc">O casal se separa. Priscilla fica com a guarda da filha e passa a se dedicar integralmente aos cuidados da menor.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Período Intermediário</div>
+                        <div class="timeline-title">Ameaças e Medida Protetiva</div>
+                        <div class="timeline-desc">Diego teria proferido ameaças contra Priscilla, resultando na concessão de medida protetiva de urgência em favor dela.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Ação de Origem</div>
+                        <div class="timeline-title">Ação de Alimentos</div>
+                        <div class="timeline-desc">Priscilla ajuíza ação de alimentos em favor da filha menor, requerendo pensão compatível com a capacidade econômica do pai.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Decisão de 1ª Instância</div>
+                        <div class="timeline-title">Fixação de Alimentos Provisórios</div>
+                        <div class="timeline-desc">O juízo de origem fixa alimentos provisórios em apenas 2 salários mínimos, considerando a renda declarada pelo pai de R$ 6.500/mês.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2026</div>
+                        <div class="timeline-title">Interposição do Agravo</div>
+                        <div class="timeline-desc">Inconformada com o valor fixado, Priscilla interpõe Agravo de Instrumento (Processo nº 0007993-84.2026.8.19.0000) pedindo majoração para 20 salários mínimos por 5 anos.</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Fase Atual</div>
+                        <div class="timeline-title">Tramitação do Recurso</div>
+                        <div class="timeline-desc">Agravo de Instrumento em tramitação perante o Tribunal de Justiça do Rio de Janeiro, aguardando decisão sobre o pedido de majoração.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MINDMAP SECTION -->
+        <section id="mindmap" class="section">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem;">🧠 Mapa Mental do Caso</h2>
+            
+            <div class="mindmap-container">
+                <div class="mindmap">
+                    <!-- Centro -->
+                    <div class="mindmap-center">
+                        <div class="icon">⚖️</div>
+                        <div class="label">AGRAVO DE<br>INSTRUMENTO</div>
+                    </div>
+
+                    <!-- Branch 1 - Pedido -->
+                    <div class="mindmap-branch branch-1">
+                        <div class="mindmap-node" style="border-color: #58a6ff;">
+                            <div class="icon">📈</div>
+                            <div class="label">PEDIDO</div>
+                            <div class="value">20 SM por 5 anos</div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 2 - Agravante -->
+                    <div class="mindmap-branch branch-2">
+                        <div class="mindmap-node" style="border-color: #3fb950;">
+                            <div class="icon">👩</div>
+                            <div class="label">AGRAVANTE</div>
+                            <div class="value">Priscilla</div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 3 - Situação Mãe -->
+                    <div class="mindmap-branch branch-3">
+                        <div class="mindmap-node" style="border-color: #d29922;">
+                            <div class="icon">💼</div>
+                            <div class="label">SITUAÇÃO</div>
+                            <div class="value">Desempregada / R$5k</div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 4 - Agravado -->
+                    <div class="mindmap-branch branch-4">
+                        <div class="mindmap-node" style="border-color: #f85149;">
+                            <div class="icon">👨</div>
+                            <div class="label">AGRAVADO</div>
+                            <div class="value">Diego Barros</div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 5 - Patrimônio -->
+                    <div class="mindmap-branch branch-5">
+                        <div class="mindmap-node" style="border-color: #a371f7;">
+                            <div class="icon">🏢</div>
+                            <div class="label">PATRIMÔNIO</div>
+                            <div class="value">14 Restaurantes</div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 6 - Ocultação -->
+                    <div class="mindmap-branch branch-6">
+                        <div class="mindmap-node" style="border-color: #f778ba;">
+                            <div class="icon">🕵️</div>
+                            <div class="label">OCULTAÇÃO</div>
+                            <div class="value">Patrimônio oculto</div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 7 - Menor -->
+                    <div class="mindmap-branch branch-7">
+                        <div class="mindmap-node" style="border-color: #79c0ff;">
+                            <div class="icon">👶</div>
+                            <div class="label">MENOR</div>
+                            <div class="value">1 ano e 9 meses</div>
+                        </div>
+                    </div>
+
+                    <!-- Branch 8 - Medida Protetiva -->
+                    <div class="mindmap-branch branch-8">
+                        <div class="mindmap-node" style="border-color: #ff7b72;">
+                            <div class="icon">🛡️</div>
+                            <div class="label">PROTEÇÃO</div>
+                            <div class="value">Medida protetiva</div>
+                        </div>
+                    </div>
+
+                    <!-- SVG Lines -->
+                    <svg style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 0;">
+                        <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="50%" y1="50%" x2="80%" y2="25%" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="50%" y1="50%" x2="85%" y2="50%" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="50%" y1="50%" x2="80%" y2="75%" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="50%" y1="50%" x2="20%" y2="75%" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="50%" y1="50%" x2="15%" y2="50%" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
+                        <line x1="50%" y1="50%" x2="20%" y2="25%" stroke="#30363d" stroke-width="2" stroke-dasharray="5,5"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1.5rem;">
+                <div class="card-header">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">💡</div>
+                    <h2 class="card-title">Legenda do Mapa</h2>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-label">Pedido: Majoração de 2 para 20 salários mínimos mensais</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🏢</div>
+                        <div class="stat-label">Patrimônio: Rede com 14 restaurantes e 2000+ funcionários</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🕵️</div>
+                        <div class="stat-label">Ocultação: Bens em nome de terceiros/"laranjas"</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🛡️</div>
+                        <div class="stat-label">Proteção: Medida protetiva por ameaças</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BUSCA SECTION -->
+        <section id="busca" class="section">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.5rem;">🔍 Busca no Documento</h2>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Digite uma palavra-chave para buscar...">
+                    <button class="search-btn" onclick="performSearch()">Buscar</button>
+                </div>
+                <div class="quick-tags">
+                    <span class="tag" onclick="searchTag('alimentos')">alimentos</span>
+                    <span class="tag" onclick="searchTag('patrimônio')">patrimônio</span>
+                    <span class="tag" onclick="searchTag('restaurante')">restaurante</span>
+                    <span class="tag" onclick="searchTag('Porsche')">Porsche</span>
+                    <span class="tag" onclick="searchTag('medida protetiva')">medida protetiva</span>
+                    <span class="tag" onclick="searchTag('ocultação')">ocultação</span>
+                    <span class="tag" onclick="searchTag('salário mínimo')">salário mínimo</span>
+                    <span class="tag" onclick="searchTag('funcionários')">funcionários</span>
+                </div>
+            </div>
+
+            <div class="results-container">
+                <div class="results-header" id="resultsHeader">
+                    💬 Digite uma palavra-chave para iniciar a busca
+                </div>
+                <div class="results-content" id="resultsContent">
+                    <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">
+                        Os resultados da busca aparecerão aqui.<br>
+                        Use as tags rápidas acima ou digite sua própria busca.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Análise Jurídica - Agravo de Instrumento nº 0007993-84.2026.8.19.0000</p>
+        <p>Tribunal de Justiça do Estado do Rio de Janeiro</p>
+    </footer>
+
+    <script>
+        // Document content database for search
+        const documentContent = [
+            {
+                category: "Partes",
+                text: "AGRAVANTE: Priscilla Pinto Gomez Rodriguez Moura - Ex-companheira do agravado, mãe da menor, atualmente desempregada com renda aproximada de R$ 5.000 mensais."
+            },
+            {
+                category: "Partes",
+                text: "AGRAVADO: Diego Fernandes Barros - Empresário, proprietário da rede de restaurantes Sushi da Praça, com 14 unidades e mais de 2.000 funcionários."
+            },
+            {
+                category: "Alimentos",
+                text: "Alimentos provisórios fixados pelo juízo de origem: 2 (dois) salários mínimos mensais."
+            },
+            {
+                category: "Alimentos",
+                text: "Pedido de majoração: 20 (vinte) salários mínimos mensais pelo período de 5 (cinco) anos, totalizando aproximadamente R$ 30.280,00 mensais."
+            },
+            {
+                category: "Alimentos",
+                text: "Fundamento jurídico: O trinômio necessidade-possibilidade-proporcionalidade não foi observado pela decisão agravada ao fixar os alimentos provisórios."
+            },
+            {
+                category: "Patrimônio",
+                text: "O agravado é proprietário da rede Sushi da Praça, composta por 14 restaurantes em funcionamento."
+            },
+            {
+                category: "Patrimônio",
+                text: "A rede empresarial do agravado emprega mais de 2.000 funcionários diretos."
+            },
+            {
+                category: "Patrimônio",
+                text: "O agravado é proprietário de um Porsche blindado, veículo de alto valor que demonstra elevado padrão de vida."
+            },
+            {
+                category: "Patrimônio",
+                text: "Além dos restaurantes, o agravado possui participação em empreendimentos do setor de construção civil."
+            },
+            {
+                category: "Patrimônio",
+                text: "O agravado possui diversos imóveis de luxo que não foram declarados adequadamente no processo."
+            },
+            {
+                category: "Ocultação",
+                text: "A agravante alega que houve ocultação patrimonial dolosa por parte do agravado, que declarou renda de apenas R$ 6.500 mensais."
+            },
+            {
+                category: "Ocultação",
+                text: "Há indícios de que bens foram transferidos para terceiros ou empresas em nome de 'laranjas' para ocultar o real patrimônio."
+            },
+            {
+                category: "Ocultação",
+                text: "Pedido subsidiário: Quebra de sigilo bancário e fiscal para comprovação da real capacidade econômica do agravado."
+            },
+            {
+                category: "Situação da Agravante",
+                text: "A agravante encontra-se desempregada e dedica-se integralmente aos cuidados da filha menor de 1 ano e 9 meses."
+            },
+            {
+                category: "Situação da Agravante",
+                text: "A renda mensal da agravante é de aproximadamente R$ 5.000,00, insuficiente para manter o padrão de vida da menor."
+            },
+            {
+                category: "Medida Protetiva",
+                text: "Existe medida protetiva de urgência vigente contra o agravado em favor da agravante, decorrente de ameaças proferidas por ele."
+            },
+            {
+                category: "Medida Protetiva",
+                text: "As ameaças do agravado demonstram conduta intimidatória e agravam a situação de vulnerabilidade da agravante."
+            },
+            {
+                category: "Processo",
+                text: "Número do processo: 0007993-84.2026.8.19.0000 - Agravo de Instrumento em tramitação no TJ-RJ."
+            },
+            {
+                category: "Menor",
+                text: "A menor alimentanda possui 1 ano e 9 meses de idade e reside com a mãe (agravante)."
+            },
+            {
+                category: "Menor",
+                text: "A criança tem direito a alimentos compatíveis com a condição social e econômica do pai, conforme artigo 1.694 do Código Civil."
+            },
+            {
+                category: "Argumentos Jurídicos",
+                text: "A decisão agravada baseou-se exclusivamente na renda declarada pelo agravado (R$ 6.500), ignorando os sinais exteriores de riqueza."
+            },
+            {
+                category: "Argumentos Jurídicos",
+                text: "O padrão de vida ostentado pelo agravado (Porsche blindado, múltiplos imóveis, rede de restaurantes) é incompatível com a renda declarada."
+            },
+            {
+                category: "Argumentos Jurídicos",
+                text: "Os alimentos devem ser fixados com base na teoria da aparência, considerando o real padrão de vida do alimentante."
+            }
+        ];
+
+        // Navigation handling
+        document.querySelectorAll('.nav-tabs a').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                document.querySelectorAll('.nav-tabs a').forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                
+                // Show target section
+                const targetSection = this.getAttribute('data-section');
+                document.getElementById(targetSection).classList.add('active');
+            });
+        });
+
+        // Search functionality
+        function performSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (!query) {
+                document.getElementById('resultsHeader').innerHTML = '⚠️ Digite uma palavra-chave para buscar';
+                document.getElementById('resultsContent').innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Por favor, insira um termo de busca.</p>';
+                return;
+            }
+
+            const results = documentContent.filter(item => 
+                item.text.toLowerCase().includes(query) || 
+                item.category.toLowerCase().includes(query)
+            );
+
+            if (results.length === 0) {
+                document.getElementById('resultsHeader').innerHTML = `🔍 Nenhum resultado para "<strong>${query}</strong>"`;
+                document.getElementById('resultsContent').innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Tente outros termos como: alimentos, patrimônio, restaurante, Porsche, etc.</p>';
+                return;
+            }
+
+            document.getElementById('resultsHeader').innerHTML = `✅ ${results.length} resultado(s) encontrado(s) para "<strong>${query}</strong>"`;
+            
+            let html = '';
+            results.forEach(result => {
+                const highlightedText = result.text.replace(
+                    new RegExp(`(${query})`, 'gi'),
+                    '<span class="highlight">$1</span>'
+                );
+                html += `
+                    <div class="result-item">
+                        <div class="result-category">${result.category}</div>
+                        <div class="result-text">${highlightedText}</div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('resultsContent').innerHTML = html;
+        }
+
+        function searchTag(term) {
+            document.getElementById('searchInput').value = term;
+            performSearch();
+        }
+
+        // Enter key for search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+    </script>
+</body>
+</html>
